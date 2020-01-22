@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<munit:config name="faith-test-suite.xml" />
+	<munit:test name="faith-test-suite-get:\users:users1-configTest" doc:id="89f02a1b-dacd-44e3-83de-2a03259407f0" description="Test">
+		<munit:behavior >
+			<ee:transform doc:name="Transform Message" doc:id="d9cdc15c-f7d2-4df4-8463-21c64c734d2a" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+                    "id": 1,
+                    "first": "Adam",
+                    "last": "Bob",
+                    "department": "IIB"
+            
+               }]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="c4e8ccda-5ae4-46ec-8d4b-b6f063cff207" />
+			<flow-ref doc:name="Flow-ref to get:\users:users1-config" doc:id="705113e3-e5f3-4902-8d87-c68c4a9b0ec7" name="get:\users:users1-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="8c810ef9-698f-402e-91b0-906bca0dc305" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="faith-test-suite-get:\users\(ID):users1-configTest" doc:id="3fcc3f01-179e-4ea7-8cba-380f49e0b08e" description="Test">
+		<munit:behavior >
+			<ee:transform doc:name="Transform Message" doc:id="15a5459d-8100-4d03-aee2-42ab431867a5" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+ {
+                    "id": 1,
+                    "first": "Adam",
+                    "last": "Bob",
+                    "department": "IIB"
+            
+               }]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="302db089-8154-4ca6-9553-88282168a023" >
+				<munit:attributes value="#[{uriParams: {ID:95}}]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\users\(ID):users1-config" doc:id="1c114f9b-4738-4446-84d4-59b12758a192" name="get:\users\(ID):users1-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="1b558829-e217-40f6-985e-42d95ad967cb" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="faith-test-suite-delete:\users\(ID):application\json:users1-configTest" doc:id="4f10f0ac-7bfc-4415-930a-3c1b317c1ab4" description="Test">
+		<munit:behavior >
+			<ee:transform doc:name="Transform Message" doc:id="736ba5a9-93f7-487d-baf3-6d812e16c0a4" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ {
+                    "id": 1,
+                    "first": "Adam",
+                    "last": "Bob",
+                    "department": "IIB"
+            
+               }]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="cce9e86c-f878-4a4a-8cb5-f284ba47485d" >
+				<munit:attributes value="#[{uriParams :{ID:99}}]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to delete:\users\(ID):application\json:users1-config" doc:id="51dc0b5c-aca0-422d-b794-9279de475d00" name="delete:\users\(ID):application\json:users1-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="576315d3-3418-4ee9-a5e2-1150507667ab" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="faith-test-suite-put:\users:application\json:users1-configTest" doc:id="23bf43d8-6c3d-4800-a9ce-5fc12501d17b" description="Test">
+		<munit:behavior >
+			<ee:transform doc:name="Transform Message" doc:id="1abb12d6-7663-4b86-9c91-0b22ace71db1" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+                            "first": "Adam",
+                            "last": "Bob",
+                            "department": "IIB"
+                    
+                      }
+                            
+       ]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="5b8031c4-fb01-4ef2-b1e1-4a50236836a9" >
+				<munit:payload value="#[payload]" mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to put:\users:application\json:users1-config" doc:id="1f876eb6-fd9f-486e-8d73-6b83df4e240f" name="put:\users:application\json:users1-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="b00a3ddc-1a58-48e3-914b-459607e841f4" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="faith-test-suite-post:\users:application\json:users1-configTest" doc:id="17d419b5-42bc-43bc-ae53-c63feee3c326" description="Test">
+		<munit:behavior >
+			<ee:transform doc:name="Transform Message" doc:id="1623ad58-9998-479a-9351-2b35e906b285" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+
+                    
+                      {
+                            "first": "Adam",
+                            "last": "Bob",
+                            "department": "IIB"
+                    
+                      }]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="e817d377-fb23-4697-8d2b-ee683d9a4492" >
+				<munit:payload value="#[payload]" mediaType="application/json" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\users:application\json:users1-config" doc:id="d9c51eb3-c4ed-4441-a67d-27151b24273d" name="post:\users:application\json:users1-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="307f1077-2b65-46e4-8d42-cd4148f13d95" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
